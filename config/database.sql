@@ -32,24 +32,6 @@ CREATE TABLE IF NOT EXISTS `admins` (
 INSERT INTO `admins` (`id`, `username`, `password`) VALUES
 	(1, 'admin', '$2y$10$Ifw..c/A8D2y82L/2Sappaulm3G0eB5tD25ciV8pWjcsNXIx4tS6u');
 
--- Dumping structure for table clinic_db.appointments
-CREATE TABLE IF NOT EXISTS `appointments` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `patient_id` int(11) NOT NULL,
-  `doctor_id` int(11) NOT NULL,
-  `date` date NOT NULL,
-  `time_slot` varchar(20) NOT NULL,
-  `reason` text DEFAULT NULL,
-  `status` varchar(20) DEFAULT 'Pending',
-  PRIMARY KEY (`id`),
-  KEY `patient_id` (`patient_id`),
-  KEY `doctor_id` (`doctor_id`),
-  CONSTRAINT `appointments_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`),
-  CONSTRAINT `appointments_ibfk_2` FOREIGN KEY (`doctor_id`) REFERENCES `doctors` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- Dumping data for table clinic_db.appointments: ~0 rows (approximately)
-
 -- Dumping structure for table clinic_db.doctors
 CREATE TABLE IF NOT EXISTS `doctors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -74,6 +56,24 @@ CREATE TABLE IF NOT EXISTS `patients` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping structure for table clinic_db.appointments
+CREATE TABLE IF NOT EXISTS `appointments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `patient_id` int(11) NOT NULL,
+  `doctor_id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `time_slot` varchar(20) NOT NULL,
+  `reason` text DEFAULT NULL,
+  `status` varchar(20) DEFAULT 'Pending',
+  PRIMARY KEY (`id`),
+  KEY `patient_id` (`patient_id`),
+  KEY `doctor_id` (`doctor_id`),
+  CONSTRAINT `appointments_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`),
+  CONSTRAINT `appointments_ibfk_2` FOREIGN KEY (`doctor_id`) REFERENCES `doctors` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table clinic_db.appointments: ~0 rows (approximately)
 
 -- Dumping data for table clinic_db.patients: ~0 rows (approximately)
 
