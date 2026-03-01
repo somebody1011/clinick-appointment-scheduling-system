@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `admins` (
 
 -- Dumping data for table clinic_db.admins: ~1 rows (approximately)
 INSERT INTO `admins` (`id`, `username`, `password`) VALUES
-	(1, 'admin', '$2y$10$Ifw..c/A8D2y82L/2Sappaulm3G0eB5tD25ciV8pWjcsNXIx4tS6u');
+	(1, 'admin', '$2y$12$kDcqgP8V01udubqxVnyjCu433EAPixRVgItyeMrE8BSMcq18bwAjC');
 
 -- Dumping structure for table clinic_db.doctors
 CREATE TABLE IF NOT EXISTS `doctors` (
@@ -43,8 +43,8 @@ CREATE TABLE IF NOT EXISTS `doctors` (
 
 -- Dumping data for table clinic_db.doctors: ~2 rows (approximately)
 INSERT INTO `doctors` (`id`, `name`, `specialization`, `password`) VALUES
-	(1, 'Dr. Smith', 'Cardiologist', '$2y$10$Ifw..c/A8D2y82L/2Sappaulm3G0eB5tD25ciV8pWjcsNXIx4tS6u'),
-	(2, 'Dr. Jones', 'Dermatologist', '$2y$10$Ifw..c/A8D2y82L/2Sappaulm3G0eB5tD25ciV8pWjcsNXIx4tS6u');
+	(1, 'Dr. Smith', 'Cardiologist', '$2y$12$OcVXZjhxVU9qOvMODYpnCOYDPqeBv4kxGkcPm53amXQud1vyqgUji');
+  -- (2, 'Dr. Jones', 'Dermatologist', '$2y$10$Ifw..c/A8D2y82L/2Sappaulm3G0eB5tD25ciV8pWjcsNXIx4tS6u')
 
 -- Dumping structure for table clinic_db.patients
 CREATE TABLE IF NOT EXISTS `patients` (

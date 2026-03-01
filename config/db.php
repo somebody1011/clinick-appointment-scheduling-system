@@ -7,17 +7,17 @@
 
 // --- Database Configuration ---
 
-// Database host (usually 'localhost' for local development)
-define('DB_HOST', 'localhost');
+// Database host (use environment variables for Docker, fallback for local development)
+define('DB_HOST', getenv('DB_HOST') ?: '127.0.0.1');
 
-// Database username (default is 'root' for XAMPP)
-define('DB_USERNAME', 'root');
+// Database username
+define('DB_USERNAME', getenv('DB_USER') ?: 'root');
 
-// Database password (default is empty for XAMPP)
-define('DB_PASSWORD', '');
+// Database password
+define('DB_PASSWORD', getenv('DB_PASSWORD') ?: '');
 
 // Database name
-define('DB_NAME', 'clinic_db');
+define('DB_NAME', getenv('DB_NAME') ?: 'clinic_db');
 
 // --- Database Connection ---
 
