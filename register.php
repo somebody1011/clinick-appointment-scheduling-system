@@ -52,41 +52,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Clinic Appointment Scheduling System</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">Register</div>
-                    <div class="card-body">
-                        <?php if (isset($error)) { echo "<div class='alert alert-danger'>$error</div>"; } ?>
-                        <form method="post" action="">
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" name="name" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input type="email" name="email" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Phone</label>
-                                <input type="text" name="phone" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" name="password" class="form-control" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Register</button>
-                            <p class="mt-3">Already have an account? <a href="login.php">Login here</a></p>
-                        </form>
-                    </div>
+    <div class="auth-container">
+        <div class="auth-card fade-in">
+            <h2>Create Account</h2>
+            <p class="text-muted mb-4">Register to book appointments at our clinic</p>
+            
+            <?php if (isset($error)) { ?>
+                <div class="alert alert-danger">
+                    <strong>Error:</strong> <?php echo htmlspecialchars($error); ?>
                 </div>
+            <?php } ?>
+            
+            <form method="post" action="">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" name="name" class="form-control" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+                    <p class="form-hint">We'll use this to contact you about appointments</p>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" name="phone" class="form-control" placeholder="Enter your phone number" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" placeholder="Create a strong password" required>
+                    <p class="form-hint">Minimum 6 characters recommended</p>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block btn-lg mt-2 mb-3">Create Account</button>
+            </form>
+            
+            <div class="text-center">
+                <p class="text-muted">Already have an account? <a href="login.php" class="auth-link">Sign in here</a></p>
             </div>
         </div>
     </div>

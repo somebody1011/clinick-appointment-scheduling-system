@@ -32,65 +32,86 @@ $appointments = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Dashboard - Clinic Appointment Scheduling System</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">Clinic System</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="dashboard.php">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="book_appointment.php">Book Appointment</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="../logout.php">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <div class="container mt-5">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2>My Appointments</h2>
-            <a href="book_appointment.php" class="btn btn-outline-light btn-sm text-primary">Book Appointment</a>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h5 class="mb-3 hint">Recent and past appointments</h5>
-                <div class="table-responsive">
-                    <table class="table">
-            <thead>
-                <tr>
-                    <th>Doctor</th>
-                    <th>Date</th>
-                    <th>Time Slot</th>
-                    <th>Reason</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($appointments as $appointment) : ?>
-                    <tr>
-                        <td><?php echo $appointment['doctor_name']; ?></td>
-                        <td><?php echo $appointment['date']; ?></td>
-                        <td><?php echo $appointment['time_slot']; ?></td>
-                        <td><?php echo $appointment['reason']; ?></td>
-                        <td><?php echo $appointment['status']; ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-                </table>
-                </div>
+        <div class="container">
+            <a class="navbar-brand" href="#">Clinic System</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="dashboard.php">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="book_appointment.php">Book Appointment</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../logout.php">Logout</a>
+                    </li>
+                </ul>
             </div>
         </div>
+    </nav>
+
+    <div class="dashboard-header">
+        <div class="container">
+            <h2 class="dashboard-title">My Appointments</h2>
+            <p class="dashboard-subtitle">Manage and track all your scheduled appointments</p>
+        </div>
+    </div>
+
+    <div class="container mt-4 mb-5">
+        <?php if (count($appointments) === 0) : ?>
+            <div class="card">
+                <div class="card-body text-center py-5">
+                    <h4 class="text-muted mb-2">No appointments scheduled</h4>
+                    <p class="text-muted">You haven't booked any appointments yet.</p>
+                    <a href="book_appointment.php" class="btn btn-primary mt-3">Book Your First Appointment</a>
+                </div>
+            </div>
+        <?php else: ?>
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Doctor</th>
+                                    <th>Date</th>
+                                    <th>Time Slot</th>
+                                    <th>Reason</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($appointments as $appointment) : ?>
+                                    <tr>
+                                        <td><strong><?php echo htmlspecialchars($appointment['doctor_name']); ?></strong></td>
+                                        <td><?php echo $appointment['date']; ?></td>
+                                        <td><?php echo htmlspecialchars($appointment['time_slot']); ?></td>
+                                        <td><?php echo htmlspecialchars($appointment['reason']); ?></td>
+                                        <td>
+                                            <span class="badge badge-<?php echo strtolower($appointment['status']); ?> status-<?php echo strtolower($appointment['status']); ?>">
+                                                <?php echo htmlspecialchars($appointment['status']); ?>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
 </body>
 </html>

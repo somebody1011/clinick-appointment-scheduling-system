@@ -33,75 +33,100 @@ $appointments = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Clinic Appointment Scheduling System</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">Clinic System - Admin</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="dashboard.php">Appointments</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="../logout.php">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <div class="container mt-5">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2>Appointments for <span class="text-muted"><?php echo htmlspecialchars($date_filter); ?></span></h2>
-            <form class="form-inline" method="get">
-                <label for="date" class="mr-2 hint">Select Date:</label>
-                <input type="date" id="date" name="date" class="form-control mr-2" value="<?php echo $date_filter; ?>" onchange="this.form.submit()">
-                <a href="dashboard.php" class="btn btn-outline-secondary">Today</a>
-            </form>
-        </div>
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table">
-            <thead>
-                <tr>
-                    <th>Patient</th>
-                    <th>Doctor</th>
-                    <th>Time Slot</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($appointments as $appointment) : ?>
-                    <tr>
-                        <td><?php echo $appointment['patient_name']; ?></td>
-                        <td><?php echo $appointment['doctor_name']; ?></td>
-                        <td><?php echo $appointment['time_slot']; ?></td>
-                        <td><?php echo $appointment['status']; ?></td>
-                        <td>
-                            <form method="post" action="update_status.php" style="display: inline-block;">
-                                <input type="hidden" name="appointment_id" value="<?php echo $appointment['id']; ?>">
-                                <select name="status" class="form-control-sm">
-                                    <option value="Pending" <?php if ($appointment['status'] == 'Pending') echo 'selected'; ?>>Pending</option>
-                                    <option value="Arrived" <?php if ($appointment['status'] == 'Arrived') echo 'selected'; ?>>Arrived</option>
-                                    <option value="Completed" <?php if ($appointment['status'] == 'Completed') echo 'selected'; ?>>Completed</option>
-                                </select>
-                                <button type="submit" class="btn btn-primary btn-sm">Update</button>
-                            </form>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-                </div>
+        <div class="container">
+            <a class="navbar-brand" href="#">Clinic System - Admin</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="dashboard.php">Appointments</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../logout.php">Logout</a>
+                    </li>
+                </ul>
             </div>
         </div>
+    </nav>
+
+    <div class="dashboard-header">
+        <div class="container">
+            <h2 class="dashboard-title">All Appointments</h2>
+            <p class="dashboard-subtitle">Manage and monitor clinic appointments</p>
+        </div>
+    </div>
+
+    <div class="container mt-4 mb-5">
+        <div class="filter-bar mb-4">
+            <form method="get" class="d-flex gap-2">
+                <input type="date" name="date" class="form-control" value="<?php echo htmlspecialchars($date_filter); ?>" onchange="this.form.submit()">
+                <a href="dashboard.php" class="btn btn-outline-secondary">Today</a>
+            </form>
+            <span class="text-muted">Showing appointments for <strong><?php echo htmlspecialchars($date_filter); ?></strong></span>
+        </div>
+
+        <?php if (count($appointments) === 0) : ?>
+            <div class="card">
+                <div class="card-body text-center py-5">
+                    <h4 class="text-muted mb-2">No appointments</h4>
+                    <p class="text-muted">No appointments scheduled for this date.</p>
+                </div>
+            </div>
+        <?php else: ?>
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Patient</th>
+                                    <th>Doctor</th>
+                                    <th>Time Slot</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($appointments as $appointment) : ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($appointment['patient_name']); ?></td>
+                                        <td><?php echo htmlspecialchars($appointment['doctor_name']); ?></td>
+                                        <td><?php echo htmlspecialchars($appointment['time_slot']); ?></td>
+                                        <td>
+                                            <span class="badge badge-<?php echo strtolower($appointment['status']); ?> status-<?php echo strtolower($appointment['status']); ?>">
+                                                <?php echo htmlspecialchars($appointment['status']); ?>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <form method="post" action="update_status.php" style="display: inline-block;">
+                                                <input type="hidden" name="appointment_id" value="<?php echo $appointment['id']; ?>">
+                                                <select name="status" class="form-control-sm" style="width: 120px; display: inline-block; margin-right: 5px;">
+                                                    <option value="Pending" <?php if ($appointment['status'] == 'Pending') echo 'selected'; ?>>Pending</option>
+                                                    <option value="Arrived" <?php if ($appointment['status'] == 'Arrived') echo 'selected'; ?>>Arrived</option>
+                                                    <option value="Completed" <?php if ($appointment['status'] == 'Completed') echo 'selected'; ?>>Completed</option>
+                                                </select>
+                                                <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
 </body>
 </html>

@@ -1,0 +1,17 @@
+/* Shared application styles */
+:root{
+  --primary: #2b6cb0;
+  --bg: #f6f9fc;
+  --muted: #6b7380;
+  --text: #23303f;
+}
+body{background:var(--bg);color:var(--text);font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+.navbar{box-shadow:0 2px 6px rgba(35,48,63,0.06);}
+.container{max-width:1100px}
+.card{border:0;border-radius:8px}
+.table thead th{border-bottom:2px solid #e9eef5}
+.table tbody tr:hover{background:#f1f6fb}
+.hint{color:var(--muted)}
+.btn-primary{background:var(--primary);border-color:var(--primary)}
+.form-inline .form-control{min-width:170px}
+@media (max-width:576px){.form-inline{display:block}.form-inline .form-control{width:100%;margin-bottom:8px}}

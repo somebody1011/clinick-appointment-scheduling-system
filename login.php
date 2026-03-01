@@ -55,40 +55,78 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Clinic Appointment Scheduling System</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">Login</div>
-                    <div class="card-body">
-                        <?php if (isset($error) && !empty($error)) { echo "<div class='alert alert-danger'>$error</div>"; } ?>
-                        <form method="post" action="">
-                            <div class="form-group">
-                                <label>Email/Username</label>
-                                <input type="text" name="email_username" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" name="password" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Role</label>
-                                <select name="role" class="form-control">
-                                    <option value="patient">Patient</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="doctor">Doctor</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Login</button>
-                            <p class="mt-3">Don't have an account? <a href="register.php">Register here</a></p>
-                        </form>
+    <div class="auth-wrapper">
+        <div class="auth-background"></div>
+        <div class="auth-content">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <div class="auth-icon">🏥</div>
+                    <h1>Clinic System</h1>
+                    <p>Appointment Scheduling</p>
+                </div>
+
+                <?php if (isset($error) && !empty($error)) { ?>
+                    <div class="alert alert-danger alert-icon">
+                        <span class="alert-icon-symbol">⚠️</span>
+                        <div>
+                            <strong>Login Failed</strong>
+                            <p><?php echo htmlspecialchars($error); ?></p>
+                        </div>
                     </div>
+                <?php } ?>
+
+                <form method="post" action="" class="auth-form">
+                    <div class="form-group">
+                        <label class="form-label">Select Your Role</label>
+                        <div class="role-selector">
+                            <label class="role-option">
+                                <input type="radio" name="role" value="patient" required>
+                                <span class="role-icon">👤</span>
+                                <span class="role-text">Patient</span>
+                            </label>
+                            <label class="role-option">
+                                <input type="radio" name="role" value="doctor">
+                                <span class="role-icon">👨‍⚕️</span>
+                                <span class="role-text">Doctor</span>
+                            </label>
+                            <label class="role-option">
+                                <input type="radio" name="role" value="admin">
+                                <span class="role-icon">⚙️</span>
+                                <span class="role-text">Admin</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="email_username">Email or Username</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="email_username" name="email_username" class="form-control form-control-lg" placeholder="your@email.com" required>
+                            <span class="input-icon">📧</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="password" name="password" class="form-control form-control-lg" placeholder="••••••••" required>
+                            <span class="input-icon">🔒</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-login btn-lg">Sign In</button>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="register.php" class="auth-link">Sign up here</a></p>
                 </div>
             </div>
         </div>

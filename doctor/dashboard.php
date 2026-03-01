@@ -34,50 +34,62 @@ $appointments = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doctor Dashboard - Clinic Appointment Scheduling System</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/css/doctor.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">Clinic System - Doctor</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="dashboard.php">Appointments</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="../logout.php">Logout</a>
-                </li>
-            </ul>
+        <div class="container">
+            <a class="navbar-brand" href="#">Clinic System - Doctor</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="dashboard.php">Appointments</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../logout.php">Logout</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
-    <div class="container mt-5">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2>Appointments for <span class="text-muted"><?php echo htmlspecialchars($selected_date); ?></span></h2>
-            <form method="get" class="form-inline">
-                <label for="date" class="mr-2 text-muted">Jump to date</label>
-                <input type="date" id="date" name="date" class="form-control mr-2" value="<?php echo htmlspecialchars($selected_date); ?>" onchange="this.form.submit()">
+
+    <div class="dashboard-header">
+        <div class="container">
+            <h2 class="dashboard-title">Appointments</h2>
+            <p class="dashboard-subtitle">View appointments for a specific date</p>
+        </div>
+    </div>
+
+    <div class="container mt-4 mb-5">
+        <div class="filter-bar mb-4">
+            <form method="get" class="d-flex gap-2">
+                <input type="date" name="date" class="form-control" value="<?php echo htmlspecialchars($selected_date); ?>" onchange="this.form.submit()">
                 <a href="dashboard.php" class="btn btn-outline-secondary">Today</a>
             </form>
+            <span class="text-muted">Showing appointments for <strong><?php echo htmlspecialchars($selected_date); ?></strong></span>
         </div>
 
         <?php if (count($appointments) === 0) : ?>
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <p class="mb-0">No appointments found for this date.</p>
+            <div class="card">
+                <div class="card-body text-center py-5">
+                    <h4 class="text-muted mb-2">No appointments</h4>
+                    <p class="text-muted">No appointments scheduled for this date.</p>
                 </div>
             </div>
         <?php else: ?>
-            <div class="card shadow-sm">
+            <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover table-striped">
-                            <thead class="thead-light">
+                        <table class="table">
+                            <thead>
                                 <tr>
                                     <th>Patient</th>
                                     <th>Time Slot</th>
@@ -88,10 +100,14 @@ $appointments = $result->fetch_all(MYSQLI_ASSOC);
                             <tbody>
                                 <?php foreach ($appointments as $appointment) : ?>
                                     <tr>
-                                        <td><?php echo htmlspecialchars($appointment['patient_name']); ?></td>
+                                        <td><strong><?php echo htmlspecialchars($appointment['patient_name']); ?></strong></td>
                                         <td><?php echo htmlspecialchars($appointment['time_slot']); ?></td>
                                         <td><?php echo htmlspecialchars($appointment['reason']); ?></td>
-                                        <td><?php echo htmlspecialchars($appointment['status']); ?></td>
+                                        <td>
+                                            <span class="badge badge-<?php echo strtolower($appointment['status']); ?> status-<?php echo strtolower($appointment['status']); ?>">
+                                                <?php echo htmlspecialchars($appointment['status']); ?>
+                                            </span>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
