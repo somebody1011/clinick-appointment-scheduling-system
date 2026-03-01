@@ -37,9 +37,10 @@ $appointments = $result->fetch_all(MYSQLI_ASSOC);
 <head>
     <title>Admin Dashboard - Clinic Appointment Scheduling System</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a class="navbar-brand" href="#">Clinic System - Admin</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
@@ -55,13 +56,18 @@ $appointments = $result->fetch_all(MYSQLI_ASSOC);
         </div>
     </nav>
     <div class="container mt-5">
-        <h2>Appointments for <?php echo $date_filter; ?></h2>
-        <form class="form-inline mb-3">
-            <label for="date" class="mr-2">Select Date:</label>
-            <input type="date" id="date" name="date" class="form-control mr-2" value="<?php echo $date_filter; ?>">
-            <button type="submit" class="btn btn-primary">Filter</button>
-        </form>
-        <table class="table">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Appointments for <span class="text-muted"><?php echo htmlspecialchars($date_filter); ?></span></h2>
+            <form class="form-inline" method="get">
+                <label for="date" class="mr-2 hint">Select Date:</label>
+                <input type="date" id="date" name="date" class="form-control mr-2" value="<?php echo $date_filter; ?>" onchange="this.form.submit()">
+                <a href="dashboard.php" class="btn btn-outline-secondary">Today</a>
+            </form>
+        </div>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
             <thead>
                 <tr>
                     <th>Patient</th>
@@ -93,6 +99,9 @@ $appointments = $result->fetch_all(MYSQLI_ASSOC);
                 <?php endforeach; ?>
             </tbody>
         </table>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

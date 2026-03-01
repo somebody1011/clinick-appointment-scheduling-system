@@ -36,9 +36,10 @@ $appointments = $result->fetch_all(MYSQLI_ASSOC);
 <head>
     <title>Patient Dashboard - Clinic Appointment Scheduling System</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a class="navbar-brand" href="#">Clinic System</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
@@ -57,8 +58,15 @@ $appointments = $result->fetch_all(MYSQLI_ASSOC);
         </div>
     </nav>
     <div class="container mt-5">
-        <h2>My Appointments</h2>
-        <table class="table">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>My Appointments</h2>
+            <a href="book_appointment.php" class="btn btn-outline-light btn-sm text-primary">Book Appointment</a>
+        </div>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="mb-3 hint">Recent and past appointments</h5>
+                <div class="table-responsive">
+                    <table class="table">
             <thead>
                 <tr>
                     <th>Doctor</th>
@@ -79,7 +87,10 @@ $appointments = $result->fetch_all(MYSQLI_ASSOC);
                     </tr>
                 <?php endforeach; ?>
             </tbody>
-        </table>
+                </table>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
